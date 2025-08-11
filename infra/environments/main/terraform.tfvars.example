@@ -1,0 +1,16 @@
+# Production Environment Configuration
+google_project_id = "your-google-project-id"
+google_region     = "asia-northeast1"
+google_zone       = "asia-northeast1-a"
+
+# Database configuration (passwords are auto-generated)
+db_name     = "furusake"
+db_user     = "furusake_user"
+
+# Next.js deployment configuration
+vercel_api_token = "your-vercel-api-token"
+vercel_team_id   = "your-vercel-team-id"  # Optional
+
+# Expo EAS deployment configuration
+expo_eas_token = "your-expo-eas-token"
+expo_account_name = "your-expo-account-name"
