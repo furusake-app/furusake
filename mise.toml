@@ -1,6 +1,8 @@
 [tools]
 air = "latest"
+gcloud = "latest"
 go = "latest"
 just = "latest"
 node = "lts"
 pnpm = "latest"
+terraform = "latest"
