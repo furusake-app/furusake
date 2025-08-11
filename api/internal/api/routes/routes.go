@@ -38,5 +38,13 @@ func Setup() http.Handler {
 		Tags:        []string{"Greetings"},
 	}, greetingHandler.Hello)
 
+	huma.Register(api, huma.Operation{
+		OperationID: "health-check",
+		Method:      http.MethodGet,
+		Path:        "/health",
+		Summary:     "Health check endpoint",
+		Tags:        []string{"Health"},
+	}, greetingHandler.Health)
+
 	return router
 }
