@@ -13,6 +13,9 @@ defaults:
   run:
     working-directory: ./infra
 
+permissions:
+  pull-requests: write
+
 jobs:
   terraform-fmt:
     runs-on: ubuntu-latest
