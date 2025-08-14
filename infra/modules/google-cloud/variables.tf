@@ -62,3 +62,9 @@ variable "github_repository" {
   type        = string
   default     = "furusake-app/furusake"
 }
+
+variable "create_workload_identity" {
+  description = "Whether to create Workload Identity Federation resources"
+  type        = bool
+  default     = false
+}

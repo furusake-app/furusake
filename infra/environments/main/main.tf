@@ -47,15 +47,16 @@ provider "eas" {
 module "google" {
   source = "../../modules/google-cloud"
 
-  project_id      = var.google_project_id
-  region          = var.google_region
-  environment     = local.environment
-  resource_prefix = local.resource_prefix
-  env_config      = local.env_config
-  db_name         = local.db_config.name
-  db_user         = local.db_config.user
-  common_tags     = local.common_tags
-  allowed_members = var.allowed_members
+  project_id               = var.google_project_id
+  region                   = var.google_region
+  environment              = local.environment
+  resource_prefix          = local.resource_prefix
+  env_config               = local.env_config
+  db_name                  = local.db_config.name
+  db_user                  = local.db_config.user
+  common_tags              = local.common_tags
+  allowed_members          = var.allowed_members
+  create_workload_identity = true
 }
 
 module "vercel" {

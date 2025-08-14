@@ -18,16 +18,3 @@ output "artifact_registry_repository" {
   value       = module.google.artifact_registry_repository
 }
 
-# Workload Identity Federation outputs for GitHub Actions setup
-output "workload_identity_provider" {
-  description = "Workload Identity Provider ID for GitHub Actions"
-  value       = module.google.workload_identity_provider
-  sensitive   = false
-}
-
-output "service_account_email" {
-  description = "Service account email for Terraform CI"
-  value       = module.google.service_account_email
-  sensitive   = false
-}
-
