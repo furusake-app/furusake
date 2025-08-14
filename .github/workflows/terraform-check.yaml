@@ -66,4 +66,4 @@ jobs:
       - name: Init TFLint
         run: tflint --init
       - name: Run TFLint
-        run: tflint --recursive --config .tflint.hcl --format compact
+        run: tflint --recursive --config $(pwd)/.tflint.hcl --format compact
