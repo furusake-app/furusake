@@ -1,4 +1,3 @@
-
 variable "environment" {
   description = "Environment name"
   type        = string
@@ -19,4 +18,3 @@ variable "github_repo" {
   type        = string
   default     = "furusake-app/furusake"
 }
-
