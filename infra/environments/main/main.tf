@@ -49,7 +49,6 @@ module "google" {
 
   project_id      = var.google_project_id
   region          = var.google_region
-  zone            = var.google_zone
   environment     = local.environment
   resource_prefix = local.resource_prefix
   env_config      = local.env_config
@@ -62,20 +61,12 @@ module "google" {
 module "vercel" {
   source = "../../modules/vercel"
 
-  api_token       = var.vercel_api_token
-  team_id         = var.vercel_team_id
   environment     = local.environment
   resource_prefix = local.resource_prefix
   api_url         = module.google.cloud_run_url
   github_repo     = "furusake-app/furusake"
-  common_tags     = local.common_tags
 }
 
 module "expo" {
   source = "../../modules/expo"
-
-  token           = var.expo_eas_token
-  environment     = local.environment
-  resource_prefix = local.resource_prefix
-  common_tags     = local.common_tags
 }
