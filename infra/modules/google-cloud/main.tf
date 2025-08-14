@@ -9,14 +9,14 @@ resource "google_project_service" "apis" {
     "servicenetworking.googleapis.com",
     "vpcaccess.googleapis.com"
   ])
-  
+
   service = each.key
 }
 
 resource "google_compute_network" "private_network" {
   name                    = "${var.resource_prefix}-vpc"
   auto_create_subnetworks = false
-  
+
   depends_on = [google_project_service.apis]
 }
 
@@ -25,7 +25,7 @@ resource "google_compute_subnetwork" "private_subnet" {
   ip_cidr_range = "10.0.0.0/24"
   region        = var.region
   network       = google_compute_network.private_network.id
-  
+
   depends_on = [google_project_service.apis]
 }
 
@@ -35,7 +35,7 @@ resource "google_compute_global_address" "private_ip_range" {
   address_type  = "INTERNAL"
   prefix_length = 16
   network       = google_compute_network.private_network.id
-  
+
   depends_on = [google_project_service.apis]
 }
 
@@ -43,7 +43,7 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   network                 = google_compute_network.private_network.id
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_ip_range.name]
-  
+
   depends_on = [google_project_service.apis]
 }
 
@@ -54,7 +54,7 @@ resource "google_vpc_access_connector" "cloud_run_connector" {
   ip_cidr_range = "10.8.0.0/28"
   max_instances = 3
   min_instances = 2
-  
+
   depends_on = [google_project_service.apis]
 }
 
@@ -81,7 +81,7 @@ resource "google_artifact_registry_repository" "backend" {
   repository_id = "${var.resource_prefix}-backend"
   description   = "Docker repository for Go backend - ${var.environment}"
   format        = "DOCKER"
-  
+
   depends_on = [google_project_service.apis]
 }
 
@@ -92,7 +92,7 @@ resource "random_password" "db_password" {
 
 resource "google_secret_manager_secret" "db_password" {
   secret_id = "${var.resource_prefix}-db-password"
-  
+
   replication {
     user_managed {
       replicas {
@@ -100,7 +100,7 @@ resource "google_secret_manager_secret" "db_password" {
       }
     }
   }
-  
+
   depends_on = [google_project_service.apis]
 }
 
@@ -117,10 +117,10 @@ resource "google_sql_database_instance" "postgresql" {
 
   settings {
     tier = var.env_config.db_tier
-    
+
     backup_configuration {
       enabled                        = true
-      start_time                    = "03:00"
+      start_time                     = "03:00"
       point_in_time_recovery_enabled = true
       backup_retention_settings {
         retained_backups = var.env_config.db_backup_retention
@@ -138,7 +138,7 @@ resource "google_sql_database_instance" "postgresql" {
       value = var.env_config.db_log_statement
     }
   }
-  
+
   depends_on = [
     google_project_service.apis,
     google_service_networking_connection.private_vpc_connection
@@ -164,7 +164,7 @@ resource "google_cloud_run_service" "backend" {
     spec {
       containers {
         image = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.backend.repository_id}/api:latest"
-        
+
         ports {
           container_port = 8080
         }
@@ -173,17 +173,17 @@ resource "google_cloud_run_service" "backend" {
           name  = "DB_HOST"
           value = google_sql_database_instance.postgresql.private_ip_address
         }
-        
+
         env {
           name  = "DB_NAME"
           value = var.db_name
         }
-        
+
         env {
           name  = "DB_USER"
           value = var.db_user
         }
-        
+
         env {
           name = "DB_PASSWORD"
           value_from {
@@ -193,7 +193,7 @@ resource "google_cloud_run_service" "backend" {
             }
           }
         }
-        
+
         env {
           name  = "ENVIRONMENT"
           value = var.environment
@@ -210,7 +210,7 @@ resource "google_cloud_run_service" "backend" {
             memory = var.env_config.cloud_run_memory
           }
         }
-        
+
         startup_probe {
           http_get {
             path = "/health"
@@ -222,7 +222,7 @@ resource "google_cloud_run_service" "backend" {
           failure_threshold     = 3
         }
       }
-      
+
       container_concurrency = var.env_config.cloud_run_concurrency
       timeout_seconds       = 300
       service_account_name  = google_service_account.cloud_run.email
@@ -238,7 +238,7 @@ resource "google_cloud_run_service" "backend" {
         "run.googleapis.com/execution-environment" = var.env_config.cloud_run_execution_env
         "run.googleapis.com/cpu-throttling"        = var.env_config.cloud_run_cpu_throttling ? "true" : "false"
       }
-      
+
       labels = var.common_tags
     }
   }

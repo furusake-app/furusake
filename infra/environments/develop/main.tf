@@ -1,6 +1,6 @@
 terraform {
   required_version = ">= 1.0"
-  
+
   required_providers {
     google = {
       source  = "hashicorp/google"
@@ -11,9 +11,9 @@ terraform {
       version = "~> 3.6.0"
     }
   }
-  
+
   backend "gcs" {
-    bucket = "furusake-terraform-state-develop" 
+    bucket = "furusake-terraform-state-develop"
     prefix = "terraform/state"
   }
 }
@@ -22,13 +22,13 @@ provider "google" {
   project = var.google_project_id
   region  = var.google_region
   zone    = var.google_zone
-  
+
   default_labels = local.common_tags
 }
 
 module "google" {
   source = "../../modules/google-cloud"
-  
+
   project_id      = var.google_project_id
   region          = var.google_region
   zone            = var.google_zone

@@ -26,18 +26,18 @@ variable "resource_prefix" {
 variable "env_config" {
   description = "Environment-specific configuration"
   type = object({
-    cloud_run_cpu                = string
-    cloud_run_memory             = string
-    cloud_run_max_scale          = string
-    cloud_run_min_scale          = string
-    cloud_run_concurrency        = number
-    cloud_run_cpu_throttling     = bool
-    cloud_run_execution_env      = string
-    db_tier                      = string
-    db_backup_retention          = number
-    deletion_protection          = bool
-    db_log_statement             = string
-    enable_public_access         = bool
+    cloud_run_cpu            = string
+    cloud_run_memory         = string
+    cloud_run_max_scale      = string
+    cloud_run_min_scale      = string
+    cloud_run_concurrency    = number
+    cloud_run_cpu_throttling = bool
+    cloud_run_execution_env  = string
+    db_tier                  = string
+    db_backup_retention      = number
+    deletion_protection      = bool
+    db_log_statement         = string
+    enable_public_access     = bool
   })
 }
 
