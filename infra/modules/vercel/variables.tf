@@ -1,14 +1,3 @@
-variable "api_token" {
-  description = "Vercel API token"
-  type        = string
-  sensitive   = true
-}
-
-variable "team_id" {
-  description = "Vercel team ID"
-  type        = string
-  default     = null
-}
 
 variable "environment" {
   description = "Environment name"
@@ -31,8 +20,3 @@ variable "github_repo" {
   default     = "furusake-app/furusake"
 }
 
-variable "common_tags" {
-  description = "Common tags to apply to resources"
-  type        = map(string)
-  default     = {}
-}

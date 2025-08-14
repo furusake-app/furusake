@@ -8,11 +8,6 @@ variable "region" {
   type        = string
 }
 
-variable "zone" {
-  description = "Google Cloud zone"
-  type        = string
-}
-
 variable "environment" {
   description = "Environment name"
   type        = string
