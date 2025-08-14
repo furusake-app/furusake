@@ -56,3 +56,9 @@ variable "allowed_members" {
   type        = list(string)
   default     = []
 }
+
+variable "github_repository" {
+  description = "GitHub repository name in the format 'owner/repo' for Workload Identity Federation"
+  type        = string
+  default     = "furusake-app/furusake"
+}
