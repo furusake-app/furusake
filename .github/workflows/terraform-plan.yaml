@@ -67,6 +67,10 @@ jobs:
       - terraform-fmt
       - terraform-validate
       - tflint
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
     defaults:
       run:
         working-directory: ./infra/environments/${{ github.event.pull_request.base.ref }}
@@ -79,6 +83,11 @@ jobs:
             echo "[ERROR] Unknown Environment (${{ github.event.pull_request.base.ref }})"
             exit 1
           fi
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Setup tfcmt
