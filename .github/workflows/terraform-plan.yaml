@@ -102,12 +102,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TF_VAR_google_project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
-          TF_VAR_google_region: ${{ secrets.GOOGLE_REGION || 'asia-northeast1' }}
-          TF_VAR_google_zone: ${{ secrets.GOOGLE_ZONE || 'asia-northeast1-a' }}
           TF_VAR_vercel_api_token: ${{ secrets.VERCEL_API_TOKEN }}
           TF_VAR_vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
           TF_VAR_expo_eas_token: ${{ secrets.EXPO_EAS_TOKEN }}
           TF_VAR_expo_account_name: ${{ secrets.EXPO_ACCOUNT_NAME }}
-          TF_VAR_db_name: ${{ secrets.DB_NAME || 'furusake' }}
-          TF_VAR_db_user: ${{ secrets.DB_USER || 'furusake_user' }}
         run: tfcmt plan -patch -- terraform plan
