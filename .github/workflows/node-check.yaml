@@ -1,4 +1,4 @@
-name: Node Check for Web, Mobile
+name: Node Check
 
 on:
   push:
