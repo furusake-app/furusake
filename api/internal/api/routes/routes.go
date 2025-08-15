@@ -1,9 +1,8 @@
 package routes
 
 import (
-	"net/http"
-
 	"furusake/internal/api/handlers"
+	"net/http"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humachi"
@@ -12,7 +11,6 @@ import (
 )
 
 func Setup() http.Handler {
-
 	router := chi.NewMux()
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)

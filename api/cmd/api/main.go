@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-
 	"furusake/internal/api/routes"
+	"net/http"
 )
 
 func main() {

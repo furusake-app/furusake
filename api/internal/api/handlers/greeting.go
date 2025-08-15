@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-
 	"furusake/internal/services"
 
 	"github.com/danielgtaylor/huma/v2"
