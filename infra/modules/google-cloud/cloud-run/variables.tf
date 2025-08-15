@@ -1,5 +1,5 @@
-variable "project_id" {
-  description = "Google Cloud project ID"
+variable "resource_prefix" {
+  description = "Resource naming prefix"
   type        = string
 }
 
@@ -13,13 +13,13 @@ variable "environment" {
   type        = string
 }
 
-variable "resource_prefix" {
-  description = "Resource naming prefix"
+variable "project_id" {
+  description = "Google Cloud project ID"
   type        = string
 }
 
 variable "env_config" {
-  description = "Environment-specific configuration"
+  description = "Environment-specific Cloud Run configuration"
   type = object({
     cloud_run_cpu            = string
     cloud_run_memory         = string
@@ -28,10 +28,6 @@ variable "env_config" {
     cloud_run_concurrency    = number
     cloud_run_cpu_throttling = bool
     cloud_run_execution_env  = string
-    db_tier                  = string
-    db_backup_retention      = number
-    deletion_protection      = bool
-    db_log_statement         = string
     enable_public_access     = bool
   })
 }
@@ -57,14 +53,27 @@ variable "allowed_members" {
   default     = []
 }
 
-variable "github_repository" {
-  description = "GitHub repository name in the format 'owner/repo' for Workload Identity Federation"
+variable "container_image" {
+  description = "Container image URL for the Cloud Run service"
   type        = string
-  default     = "furusake-app/furusake"
 }
 
-variable "create_workload_identity" {
-  description = "Whether to create Workload Identity Federation resources"
-  type        = bool
-  default     = false
+variable "database_private_ip" {
+  description = "Database private IP address"
+  type        = string
+}
+
+variable "database_connection_name" {
+  description = "Database connection name"
+  type        = string
+}
+
+variable "db_password_secret_id" {
+  description = "Secret Manager secret ID for database password"
+  type        = string
+}
+
+variable "vpc_connector_name" {
+  description = "VPC Access Connector name"
+  type        = string
 }
