@@ -2,6 +2,7 @@
 air = "latest"
 gcloud = "latest"
 go = "latest"
+golangci-lint = "latest"
 just = "latest"
 node = "lts"
 pnpm = "latest"
