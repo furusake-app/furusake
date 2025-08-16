@@ -1,6 +1,5 @@
 import { defineConfig } from "orval";
 
-console.log(process.env.AAA);
 
 export default defineConfig({
   api: {
