@@ -1,6 +1,6 @@
 {
   "name": "furusake-api",
-  "exports": "./src",
+  "exports": "./src/api.ts",
   "scripts": {
     "gen": "orval --config ./orval.config.ts",
     "gen:watch": "orval --config ./orval.config.ts --watch ../../openapi.json"
