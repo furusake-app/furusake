@@ -42,6 +42,13 @@ jobs:
         with:
           node-version: 22
           cache: "pnpm"
+      - name: Setup Go
+        uses: actions/setup-go@v5
+      - name: Generate OpenAPI Spec
+        working-directory: api
+        run: go run cmd/openapi/main.go
+      - name: Generate TypeScript API Client
+        run: pnpm -F furusake-api gen
       - name: Check Lint and Format
         run: pnpm check
         working-directory: ${{ matrix.app }}
