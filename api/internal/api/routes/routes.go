@@ -10,14 +10,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func Setup() http.Handler {
-	router := chi.NewMux()
-	router.Use(middleware.Logger)
-	router.Use(middleware.Recoverer)
-
-	config := huma.DefaultConfig("Hello World API", "1.0.0")
-	api := humachi.New(router, config)
-
+func RegisterRoutes(api huma.API) {
 	greetingHandler := handlers.NewGreetingHandler()
 
 	huma.Register(api, huma.Operation{
@@ -43,6 +36,17 @@ func Setup() http.Handler {
 		Summary:     "Health check endpoint",
 		Tags:        []string{"Health"},
 	}, greetingHandler.Health)
+}
+
+func Setup() http.Handler {
+	router := chi.NewMux()
+	router.Use(middleware.Logger)
+	router.Use(middleware.Recoverer)
+
+	config := huma.DefaultConfig("Furusake Backend API", "0.0.0")
+	api := humachi.New(router, config)
+
+	RegisterRoutes(api)
 
 	return router
 }

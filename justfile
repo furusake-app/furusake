@@ -11,6 +11,9 @@ web:
 mobile:
     cd {{MOBILE_DIR}} && pnpm start
 
+openapi:
+    cd {{API_DIR}} && go run ./cmd/openapi/main.go
+
 dev-web:
     #!/bin/bash -eu
     (stdbuf -oL just api | sed "s/^/$(printf '\033[32m[API]\033[0m ')/") &
