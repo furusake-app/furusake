@@ -1,0 +1,34 @@
+name: Go Check
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "api/**"
+      - ".github/workflows/golang-check.yaml"
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - "api/**"
+      - ".github/workflows/golang-check.yaml"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Check lint
+        uses: reviewdog/action-golangci-lint@v2
+        with:
+          workdir: ./api
+          go_version_file: ./api/go.mod
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          level: error
+          golangci_lint_flags: "--config=.golangci.toml"

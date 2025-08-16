@@ -1,0 +1,57 @@
+name: Node Check
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "web/**"
+      - "mobile/**"
+      - "packages/**"
+      - "biome.jsonc"
+      - "package.json"
+      - ".github/workflows/node-check.yaml"
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - "web/**"
+      - "mobile/**"
+      - "packages/**"
+      - "biome.jsonc"
+      - "package.json"
+      - ".github/workflows/node-check.yaml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [web, mobile]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+      - name: Setup Go
+        uses: actions/setup-go@v5
+      - name: Generate OpenAPI Spec
+        working-directory: api
+        run: go run cmd/openapi/main.go
+      - name: Generate TypeScript API Client
+        run: pnpm -F furusake-api gen
+      - name: Check Lint and Format
+        run: pnpm check
+        working-directory: ${{ matrix.app }}
+      - name: Check Types
+        run: pnpm typecheck
+        working-directory: ${{ matrix.app }}

@@ -1,5 +1,5 @@
 {
-  "name": "furusake-mobile",
+  "name": "mobile",
   "main": "expo-router/entry",
   "version": "0.0.0",
   "scripts": {
@@ -8,7 +8,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "check": "biome check .",
+    "fix": "biome check --write .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
@@ -28,6 +30,7 @@
     "expo-symbols": "~0.4.5",
     "expo-system-ui": "~5.0.10",
     "expo-web-browser": "~14.2.0",
+    "furusake-api": "workspace:*",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-native": "0.80.2",
@@ -40,6 +43,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
+    "@biomejs/biome": "^2.2.0",
     "@types/react": "~19.1.9",
     "eslint": "^9.33.0",
     "eslint-config-expo": "~9.2.0",

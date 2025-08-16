@@ -1,19 +1,23 @@
 {
-  "name": "furusake-web",
+  "name": "web",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "check": "biome check .",
+    "fix": "biome check --write .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "furusake-api": "workspace:*",
     "next": "15.4.6",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^24.2.1",
     "@types/react": "^19.1.9",
