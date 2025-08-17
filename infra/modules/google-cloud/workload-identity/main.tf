@@ -38,7 +38,7 @@ resource "google_project_iam_member" "terraform_ci_storage_admin" {
 
 resource "google_project_iam_member" "terraform_ci_sql_admin" {
   project = var.project_id
-  role    = "roles/cloudsql.admin"
+  role    = "roles/cloudsql.editor"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
@@ -50,13 +50,13 @@ resource "google_project_iam_member" "terraform_ci_run_admin" {
 
 resource "google_project_iam_member" "terraform_ci_artifact_admin" {
   project = var.project_id
-  role    = "roles/artifactregistry.admin"
+  role    = "roles/artifactregistry.writer"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
 resource "google_project_iam_member" "terraform_ci_secret_admin" {
   project = var.project_id
-  role    = "roles/secretmanager.admin"
+  role    = "roles/secretmanager.secretVersionManager"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
