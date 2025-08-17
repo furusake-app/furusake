@@ -84,4 +84,3 @@ module "cloud_run" {
 
   depends_on = [module.project_apis, module.networking, module.cloud_sql, module.artifact_registry]
 }
-
