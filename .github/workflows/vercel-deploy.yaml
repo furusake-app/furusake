@@ -41,10 +41,12 @@ jobs:
             echo "environment=production" >> $GITHUB_OUTPUT
             echo "vercel-args=--prod" >> $GITHUB_OUTPUT
             echo "branch=main" >> $GITHUB_OUTPUT
+            echo "api-url=https://furusake-main-backend-1056349397922.asia-northeast1.run.app" >> $GITHUB_OUTPUT
           else
             echo "environment=preview" >> $GITHUB_OUTPUT
             echo "vercel-args=" >> $GITHUB_OUTPUT
             echo "branch=develop" >> $GITHUB_OUTPUT
+            echo "api-url=https://furusake-develop-backend-1056349397922.asia-northeast1.run.app" >> $GITHUB_OUTPUT
           fi
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -64,6 +66,8 @@ jobs:
         working-directory: api
         run: go run cmd/openapi/main.go
       - name: Generate TypeScript API Client
+        env:
+          API_BASE_URL: ${{ steps.set-env.outputs.api-url }}
         run: pnpm -F furusake-api gen
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
