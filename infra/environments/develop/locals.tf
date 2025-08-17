@@ -24,7 +24,7 @@ locals {
     deletion_protection = false
     db_log_statement    = "all"
 
-    enable_public_access = false
+    enable_public_access = true
   }
 
   db_config = {
