@@ -104,6 +104,9 @@ jobs:
           path: packages/api-client/src
       - name: Install Vercel CLI
         run: pnpm add --global vercel@latest
+      - name: Link Vercel Project
+        working-directory: web
+        run: vercel link --yes --project furusake --token=${{ secrets.VERCEL_API_TOKEN }}
       - name: Pull Vercel Environment Information
         working-directory: web
         run: vercel pull --yes --environment=${{ needs.setup.outputs.environment }} --token=${{ secrets.VERCEL_API_TOKEN }}

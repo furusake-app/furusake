@@ -117,7 +117,7 @@ module "vercel" {
   source = "../../modules/vercel"
 
   environment = local.environment
-  project_id  = local.resource_prefix
+  project_id  = local.project_name
   api_url     = module.cloud_run.cloud_run_url
 }
 
