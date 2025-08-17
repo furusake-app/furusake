@@ -116,10 +116,9 @@ module "workload_identity" {
 module "vercel" {
   source = "../../modules/vercel"
 
-  environment     = local.environment
-  resource_prefix = local.resource_prefix
-  api_url         = module.cloud_run.cloud_run_url
-  github_repo     = "furusake-app/furusake"
+  environment = local.environment
+  project_id  = local.resource_prefix
+  api_url     = module.cloud_run.cloud_run_url
 }
 
 module "expo" {

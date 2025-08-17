@@ -1,11 +1,6 @@
 resource "vercel_project" "nextjs" {
-  name      = "${var.resource_prefix}-web"
+  name      = var.project_id
   framework = "nextjs"
-
-  git_repository = {
-    type = "github"
-    repo = var.github_repo
-  }
 
   root_directory = "web"
 

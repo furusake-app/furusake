@@ -3,18 +3,12 @@ variable "environment" {
   type        = string
 }
 
-variable "resource_prefix" {
-  description = "Resource naming prefix"
+variable "project_id" {
+  description = "Vercel project ID"
   type        = string
 }
 
 variable "api_url" {
   description = "Backend API URL"
   type        = string
-}
-
-variable "github_repo" {
-  description = "GitHub repository"
-  type        = string
-  default     = "furusake-app/furusake"
 }
