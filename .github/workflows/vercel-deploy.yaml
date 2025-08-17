@@ -105,17 +105,13 @@ jobs:
       - name: Install Vercel CLI
         run: pnpm add --global vercel@latest
       - name: Link Vercel Project
-        working-directory: web
         run: vercel link --yes --project furusake --token=${{ secrets.VERCEL_API_TOKEN }}
       - name: Pull Vercel Environment Information
-        working-directory: web
         run: vercel pull --yes --environment=${{ needs.setup.outputs.environment }} --token=${{ secrets.VERCEL_API_TOKEN }}
       - name: Build Project Artifacts
-        working-directory: web
         run: vercel build ${{ needs.setup.outputs.vercel-args }} --token=${{ secrets.VERCEL_API_TOKEN }}
       - name: Deploy to Vercel
         id: deploy
-        working-directory: web
         run: |
           DEPLOYMENT_URL=$(vercel deploy --prebuilt ${{ needs.setup.outputs.vercel-args }} --token=${{ secrets.VERCEL_API_TOKEN }} | tail -n1)
           echo "deployment-url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
