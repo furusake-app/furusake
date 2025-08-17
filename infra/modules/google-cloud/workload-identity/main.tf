@@ -36,9 +36,57 @@ resource "google_project_iam_member" "terraform_ci_storage_admin" {
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
-resource "google_project_iam_member" "terraform_ci_editor" {
+resource "google_project_iam_member" "terraform_ci_sql_admin" {
   project = var.project_id
-  role    = "roles/editor"
+  role    = "roles/cloudsql.admin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+resource "google_project_iam_member" "terraform_ci_run_admin" {
+  project = var.project_id
+  role    = "roles/run.admin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+resource "google_project_iam_member" "terraform_ci_artifact_admin" {
+  project = var.project_id
+  role    = "roles/artifactregistry.admin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+resource "google_project_iam_member" "terraform_ci_secret_admin" {
+  project = var.project_id
+  role    = "roles/secretmanager.admin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+resource "google_project_iam_member" "terraform_ci_iam_admin" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountAdmin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+resource "google_project_iam_member" "terraform_ci_iam_security_admin" {
+  project = var.project_id
+  role    = "roles/iam.securityAdmin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+resource "google_project_iam_member" "terraform_ci_service_usage_admin" {
+  project = var.project_id
+  role    = "roles/serviceusage.serviceUsageAdmin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+resource "google_project_iam_member" "terraform_ci_vpc_access_admin" {
+  project = var.project_id
+  role    = "roles/vpcaccess.admin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+resource "google_project_iam_member" "terraform_ci_servicenetworking_admin" {
+  project = var.project_id
+  role    = "roles/servicenetworking.networksAdmin"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
