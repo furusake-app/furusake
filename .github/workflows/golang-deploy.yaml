@@ -1,0 +1,68 @@
+name: Deploy Go API to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "api/**"
+      - ".github/workflows/golang-deploy.yaml"
+
+concurrency:
+  group: backend-deploy-${{ github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY_REGION: asia-northeast1
+  IMAGE_NAME: backend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+      - name: Configure Docker authentication
+        run: gcloud auth configure-docker ${{ env.REGISTRY_REGION }}-docker.pkg.dev
+      - name: Set environment variables
+        id: setup
+        run: |
+          IMAGE_URI="${{ env.REGISTRY_REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/furusake-${{ github.ref_name }}-${{ env.IMAGE_NAME }}/${{ env.IMAGE_NAME }}"
+          SERVICE_NAME="furusake-${{ github.ref_name }}-${{ env.IMAGE_NAME }}"
+
+          echo "image-uri=$IMAGE_URI" >> $GITHUB_OUTPUT
+          echo "service-name=$SERVICE_NAME" >> $GITHUB_OUTPUT
+      - name: Build and push Docker image
+        run: |
+          docker build -t "${{ steps.setup.outputs.image-uri }}:${{ github.sha }}" -t "${{ steps.setup.outputs.image-uri }}:latest" ./api
+          docker push "${{ steps.setup.outputs.image-uri }}:${{ github.sha }}"
+          docker push "${{ steps.setup.outputs.image-uri }}:latest"
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy "${{ steps.setup.outputs.service-name }}" \
+            --image "${{ steps.setup.outputs.image-uri }}:${{ github.sha }}" \
+            --region "${{ env.REGISTRY_REGION }}" \
+            --platform managed \
+            --project "${{ secrets.GOOGLE_PROJECT_ID }}" \
+            --quiet
+      - name: Display deployment info
+        run: |
+          echo "🚀 Deployment completed successfully!"
+          echo "📍 Environment: ${{ github.ref_name }}"
+          echo "🔗 Service URL:"
+          gcloud run services describe "${{ steps.setup.outputs.service-name }}" \
+            --region "${{ env.REGISTRY_REGION }}" \
+            --project "${{ secrets.GOOGLE_PROJECT_ID }}" \
+            --format 'value(status.url)'

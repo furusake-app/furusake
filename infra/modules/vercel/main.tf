@@ -1,14 +1,14 @@
 resource "vercel_project" "nextjs" {
   name      = "${var.resource_prefix}-web"
   framework = "nextjs"
-  
+
   git_repository = {
     type = "github"
     repo = var.github_repo
   }
 
   root_directory = "web"
-  
+
   environment = [
     {
       key    = "NEXT_PUBLIC_API_URL"
@@ -27,7 +27,7 @@ resource "vercel_project" "nextjs" {
     },
     {
       key    = "NEXT_PUBLIC_ENVIRONMENT"
-      value  = "develop" 
+      value  = "develop"
       target = ["preview", "development"]
     }
   ]
