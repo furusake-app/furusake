@@ -76,7 +76,7 @@ module "cloud_run" {
   db_user                  = local.db_config.user
   common_tags              = local.common_tags
   allowed_members          = var.allowed_members
-  container_image          = "${module.artifact_registry.repository_url}/api:latest"
+  container_image          = "${module.artifact_registry.repository_url}/backend:latest"
   database_private_ip      = module.cloud_sql.database_private_ip
   database_connection_name = module.cloud_sql.database_connection_name
   db_password_secret_id    = module.cloud_sql.db_password_secret_id
