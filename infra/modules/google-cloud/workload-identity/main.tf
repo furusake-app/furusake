@@ -36,6 +36,12 @@ resource "google_project_iam_member" "terraform_ci_storage_admin" {
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
+resource "google_project_iam_member" "terraform_ci_compute_admin" {
+  project = var.project_id
+  role    = "roles/compute.admin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
 resource "google_project_iam_member" "terraform_ci_sql_admin" {
   project = var.project_id
   role    = "roles/cloudsql.editor"
