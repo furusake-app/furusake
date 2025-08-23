@@ -30,69 +30,115 @@ resource "google_service_account" "terraform_ci" {
   description  = "Service account for Terraform operations in CI/CD"
 }
 
-resource "google_project_iam_member" "terraform_ci_storage_admin" {
+# Cloud Run Developer - Create, update, delete Cloud Run services
+resource "google_project_iam_member" "terraform_ci_run_developer" {
   project = var.project_id
-  role    = "roles/storage.admin"
+  role    = "roles/run.developer"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
-resource "google_project_iam_member" "terraform_ci_compute_admin" {
+# Service Account User - Required to assign service accounts to Cloud Run
+resource "google_project_iam_member" "terraform_ci_service_account_user" {
   project = var.project_id
-  role    = "roles/compute.admin"
+  role    = "roles/iam.serviceAccountUser"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
-resource "google_project_iam_member" "terraform_ci_sql_admin" {
+# Artifact Registry Reader - Access container images
+resource "google_project_iam_member" "terraform_ci_artifact_reader" {
+  project = var.project_id
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+# Cloud SQL Editor - Manage Cloud SQL instances (no delete permissions)
+resource "google_project_iam_member" "terraform_ci_sql_editor" {
   project = var.project_id
   role    = "roles/cloudsql.editor"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
-resource "google_project_iam_member" "terraform_ci_run_admin" {
+# Secret Manager Secret Accessor - Read secrets
+resource "google_project_iam_member" "terraform_ci_secret_accessor" {
   project = var.project_id
-  role    = "roles/run.admin"
+  role    = "roles/secretmanager.secretAccessor"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
-resource "google_project_iam_member" "terraform_ci_artifact_admin" {
+# Secret Manager Version Manager - Create/update secret versions
+resource "google_project_iam_member" "terraform_ci_secret_version_manager" {
   project = var.project_id
-  role    = "roles/artifactregistry.writer"
+  role    = "roles/secretmanager.secretVersionManager"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
+# Secret Manager Admin - Create secrets (limited scope)
 resource "google_project_iam_member" "terraform_ci_secret_admin" {
   project = var.project_id
   role    = "roles/secretmanager.admin"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
-resource "google_project_iam_member" "terraform_ci_iam_admin" {
+# Compute Network Admin - Manage VPC, subnets
+resource "google_project_iam_member" "terraform_ci_compute_network_admin" {
   project = var.project_id
-  role    = "roles/iam.serviceAccountAdmin"
+  role    = "roles/compute.networkAdmin"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
-resource "google_project_iam_member" "terraform_ci_iam_security_admin" {
+# Compute Instance Admin - Required for VPC connectors
+resource "google_project_iam_member" "terraform_ci_compute_instance_admin" {
   project = var.project_id
-  role    = "roles/iam.securityAdmin"
+  role    = "roles/compute.instanceAdmin"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
+# Service Usage Admin - Enable/disable APIs
 resource "google_project_iam_member" "terraform_ci_service_usage_admin" {
   project = var.project_id
   role    = "roles/serviceusage.serviceUsageAdmin"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
+# Service Account Creator - Create service accounts only
+resource "google_project_iam_member" "terraform_ci_service_account_creator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountCreator"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+# Project IAM Admin - Assign roles to service accounts
+resource "google_project_iam_member" "terraform_ci_project_iam_admin" {
+  project = var.project_id
+  role    = "roles/resourcemanager.projectIamAdmin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+# Storage Admin - Access Terraform state in Cloud Storage
+resource "google_project_iam_member" "terraform_ci_storage_admin" {
+  project = var.project_id
+  role    = "roles/storage.admin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+# VPC Access Admin - Manage VPC connectors for Cloud Run
 resource "google_project_iam_member" "terraform_ci_vpc_access_admin" {
   project = var.project_id
   role    = "roles/vpcaccess.admin"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
-resource "google_project_iam_member" "terraform_ci_servicenetworking_admin" {
+# Service Networking Admin - Manage private service connections
+resource "google_project_iam_member" "terraform_ci_service_networking_admin" {
   project = var.project_id
   role    = "roles/servicenetworking.networksAdmin"
+  member  = "serviceAccount:${google_service_account.terraform_ci.email}"
+}
+
+# Artifact Registry Repository Administrator - Full registry management
+resource "google_project_iam_member" "terraform_ci_artifact_repo_admin" {
+  project = var.project_id
+  role    = "roles/artifactregistry.repoAdmin"
   member  = "serviceAccount:${google_service_account.terraform_ci.email}"
 }
 
