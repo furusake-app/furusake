@@ -11,10 +11,21 @@ import (
 var DB *pgxpool.Pool
 
 func Connect() error {
-	databaseURL := os.Getenv("DATABASE_URL")
-	if databaseURL == "" {
-		return fmt.Errorf("DATABASE_URL environment variable is not set")
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbName := os.Getenv("DB_NAME")
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	
+	if dbHost == "" || dbName == "" || dbUser == "" || dbPassword == "" {
+		return fmt.Errorf("DB_HOST, DB_NAME, DB_USER, DB_PASSWORD environment variables must be set")
 	}
+	
+	if dbPort == "" {
+		dbPort = "5432"
+	}
+	
+	databaseURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", dbUser, dbPassword, dbHost, dbPort, dbName)
 
 	var err error
 	DB, err = pgxpool.New(context.Background(), databaseURL)
