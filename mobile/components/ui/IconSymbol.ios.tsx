@@ -3,22 +3,28 @@ import {
   type SymbolViewProps,
   type SymbolWeight,
 } from "expo-symbols";
+import type { FC } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
+import { View } from "react-native";
+import { cn } from "@/utils/classnames";
 
-export function IconSymbol({
-  name,
-  size = 24,
-  color,
-  style,
-  weight = "regular",
-}: {
+type IconSymbolProps = {
   name: SymbolViewProps["name"];
   size?: number;
   color: string;
   style?: StyleProp<ViewStyle>;
+  className?: string;
   weight?: SymbolWeight;
-}) {
-  return (
+};
+
+export const IconSymbol: FC<IconSymbolProps> = ({
+  name,
+  size = 24,
+  color,
+  className,
+  weight = "regular",
+}) => (
+  <View className={cn(className)}>
     <SymbolView
       weight={weight}
       tintColor={color}
@@ -29,8 +35,7 @@ export function IconSymbol({
           width: size,
           height: size,
         },
-        style,
       ]}
     />
-  );
-}
+  </View>
+);
