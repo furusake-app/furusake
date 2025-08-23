@@ -27,6 +27,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+      - name: Setup sqlc
+        uses: sqlc-dev/setup-sqlc@v4
+        with:
+          sqlc-version: "1.29.0"
+      - name: Generate sqlc code
+        working-directory: ./api
+        run: sqlc generate
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -49,12 +56,11 @@ jobs:
           docker build -t "${{ steps.setup.outputs.image-uri }}:${{ github.sha }}" -t "${{ steps.setup.outputs.image-uri }}:latest" ./api
           docker push "${{ steps.setup.outputs.image-uri }}:${{ github.sha }}"
           docker push "${{ steps.setup.outputs.image-uri }}:latest"
-      - name: Deploy to Cloud Run
+      - name: Update Cloud Run service image
         run: |
-          gcloud run deploy "${{ steps.setup.outputs.service-name }}" \
+          gcloud run services update "${{ steps.setup.outputs.service-name }}" \
             --image "${{ steps.setup.outputs.image-uri }}:${{ github.sha }}" \
             --region "${{ env.REGISTRY_REGION }}" \
-            --platform managed \
             --project "${{ secrets.GOOGLE_PROJECT_ID }}" \
             --quiet
       - name: Display deployment info

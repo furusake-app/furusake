@@ -35,6 +35,11 @@ resource "google_cloud_run_service" "backend" {
         }
 
         env {
+          name  = "DB_PORT"
+          value = "5432"
+        }
+
+        env {
           name  = "DB_NAME"
           value = var.db_name
         }

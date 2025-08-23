@@ -2,7 +2,12 @@ package routes
 
 import (
 	"furusake/internal/api/handlers"
+	"furusake/internal/db"
+	"furusake/internal/repositories"
+	"furusake/internal/services"
 	"net/http"
+
+	sqlc "furusake/internal/db/sqlc"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humachi"
@@ -11,23 +16,52 @@ import (
 )
 
 func RegisterRoutes(api huma.API) {
-	greetingHandler := handlers.NewGreetingHandler()
+	queries := sqlc.New(db.DB)
+	exampleRepo := repositories.NewExampleRepository(queries)
+	exampleService := services.NewExampleService(exampleRepo)
+	exampleHandler := handlers.NewExampleHandler(exampleService)
+
+	healthHandler := &handlers.HealthHandler{}
 
 	huma.Register(api, huma.Operation{
-		OperationID: "simple-hello",
+		OperationID: "list-examples",
 		Method:      http.MethodGet,
-		Path:        "/hello",
-		Summary:     "Simple Hello World",
-		Tags:        []string{"Greetings"},
-	}, greetingHandler.SimpleHello)
+		Path:        "/examples",
+		Summary:     "List all examples",
+		Tags:        []string{"Examples"},
+	}, exampleHandler.List)
 
 	huma.Register(api, huma.Operation{
-		OperationID: "hello-name",
+		OperationID: "create-example",
+		Method:      http.MethodPost,
+		Path:        "/examples",
+		Summary:     "Create a new example",
+		Tags:        []string{"Examples"},
+	}, exampleHandler.Create)
+
+	huma.Register(api, huma.Operation{
+		OperationID: "get-example",
 		Method:      http.MethodGet,
-		Path:        "/hello/{name}",
-		Summary:     "Hello with name",
-		Tags:        []string{"Greetings"},
-	}, greetingHandler.Hello)
+		Path:        "/examples/{id}",
+		Summary:     "Get example by ID",
+		Tags:        []string{"Examples"},
+	}, exampleHandler.GetByID)
+
+	huma.Register(api, huma.Operation{
+		OperationID: "update-example",
+		Method:      http.MethodPut,
+		Path:        "/examples/{id}",
+		Summary:     "Update example by ID",
+		Tags:        []string{"Examples"},
+	}, exampleHandler.Update)
+
+	huma.Register(api, huma.Operation{
+		OperationID: "delete-example",
+		Method:      http.MethodDelete,
+		Path:        "/examples/{id}",
+		Summary:     "Delete example by ID",
+		Tags:        []string{"Examples"},
+	}, exampleHandler.Delete)
 
 	huma.Register(api, huma.Operation{
 		OperationID: "health-check",
@@ -35,7 +69,7 @@ func RegisterRoutes(api huma.API) {
 		Path:        "/health",
 		Summary:     "Health check endpoint",
 		Tags:        []string{"Health"},
-	}, greetingHandler.Health)
+	}, healthHandler.Health)
 }
 
 func Setup() http.Handler {
