@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"context"
-
 	"furusake/internal/db"
 )
+
+type HealthHandler struct{}
 
 type HealthResponse struct {
 	Body struct {
@@ -14,7 +15,7 @@ type HealthResponse struct {
 	}
 }
 
-func (h *GreetingHandler) Health(ctx context.Context, _ *struct{}) (*HealthResponse, error) {
+func (h *HealthHandler) Health(ctx context.Context, _ *struct{}) (*HealthResponse, error) {
 	resp := &HealthResponse{}
 	resp.Body.Checks = make(map[string]string)
 

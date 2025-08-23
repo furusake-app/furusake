@@ -2,14 +2,13 @@ package db
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"os"
 
-	_ "github.com/jackc/pgx/v5/stdlib"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-var DB *sql.DB
+var DB *pgxpool.Pool
 
 func Connect() error {
 	databaseURL := os.Getenv("DATABASE_URL")
@@ -18,23 +17,22 @@ func Connect() error {
 	}
 
 	var err error
-	DB, err = sql.Open("pgx", databaseURL)
+	DB, err = pgxpool.New(context.Background(), databaseURL)
 	if err != nil {
-		return fmt.Errorf("failed to open database connection: %w", err)
+		return fmt.Errorf("failed to create connection pool: %w", err)
 	}
 
-	if err := DB.Ping(); err != nil {
+	if err := DB.Ping(context.Background()); err != nil {
 		return fmt.Errorf("failed to ping database: %w", err)
 	}
 
 	return nil
 }
 
-func Close() error {
+func Close() {
 	if DB != nil {
-		return DB.Close()
+		DB.Close()
 	}
-	return nil
 }
 
 func HealthCheck(ctx context.Context) error {
@@ -42,5 +40,5 @@ func HealthCheck(ctx context.Context) error {
 		return fmt.Errorf("database connection is not initialized")
 	}
 
-	return DB.PingContext(ctx)
+	return DB.Ping(ctx)
 }
