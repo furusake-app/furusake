@@ -1,23 +1,20 @@
 import { Image } from "expo-image";
-import { Platform } from "react-native";
+import { Platform, View } from "react-native";
 
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import { IconCode } from "@tabler/icons-react-native";
 
 const ExploreScreen = () => (
   <ParallaxScrollView
     headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
     headerImage={
-      <IconSymbol
-        size={310}
-        color="#808080"
-        name="chevron.left.forwardslash.chevron.right"
-        className="text-gray-500 absolute -bottom-22 -left-9"
-      />
+      <View className="text-gray-500 absolute -bottom-22 -left-9">
+        <IconCode size={310} color="#808080" strokeWidth={1.5} />
+      </View>
     }
   >
     <ThemedView className="flex-row gap-2">

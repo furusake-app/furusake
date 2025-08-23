@@ -1,9 +1,9 @@
 import { type FC, type PropsWithChildren, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import { IconChevronRight } from "@tabler/icons-react-native";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { cn } from "@/utils/classnames";
@@ -23,12 +23,13 @@ export const Collapsible: FC<CollapsibleProps> = ({ children, title }) => {
         onPress={() => setIsOpen((value) => !value)}
         activeOpacity={0.8}
       >
-        <IconSymbol
-          name="chevron.right"
-          size={18}
-          className={cn({ "rotate-90": isOpen })}
-          color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
-        />
+        <View className={cn({ "rotate-90": isOpen })}>
+          <IconChevronRight
+            size={18}
+            color={theme === "light" ? Colors.light.icon : Colors.dark.icon}
+            strokeWidth={2}
+          />
+        </View>
         <ThemedText type="defaultSemiBold">{title}</ThemedText>
       </TouchableOpacity>
       {isOpen && <ThemedView className="mt-1.5 ml-6">{children}</ThemedView>}
