@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -16,16 +17,21 @@ func Connect() error {
 	dbName := os.Getenv("DB_NAME")
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
-	
+
 	if dbHost == "" || dbName == "" || dbUser == "" || dbPassword == "" {
 		return fmt.Errorf("DB_HOST, DB_NAME, DB_USER, DB_PASSWORD environment variables must be set")
 	}
-	
+
 	if dbPort == "" {
 		dbPort = "5432"
 	}
-	
-	databaseURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", dbUser, dbPassword, dbHost, dbPort, dbName)
+
+	databaseURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		url.QueryEscape(dbUser),
+		url.QueryEscape(dbPassword),
+		dbHost,
+		dbPort,
+		dbName)
 
 	var err error
 	DB, err = pgxpool.New(context.Background(), databaseURL)
