@@ -28,7 +28,7 @@ locals {
   }
 
   db_config = {
-    name = "${var.db_name}_dev"
-    user = "${var.db_user}_dev"
+    name = var.db_name
+    user = var.db_user
   }
 }

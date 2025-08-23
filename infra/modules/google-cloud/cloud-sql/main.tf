@@ -1,6 +1,8 @@
 resource "random_password" "db_password" {
   length  = 32
   special = true
+  # Exclude characters that can cause issues in connection URLs
+  override_special = "!@#$%^&*()-_=+[]|;:,.<>?"
 }
 
 resource "google_secret_manager_secret" "db_password" {
