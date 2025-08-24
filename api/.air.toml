@@ -7,7 +7,7 @@ tmp_dir = "tmp"
 [build]
 args_bin = []
 bin = "./tmp/main"
-cmd = "sqlc generate && go build -o ./tmp/main ./cmd/api && go run ./cmd/openapi/main.go"
+cmd = "go tool sqlc generate && go build -o ./tmp/main ./cmd/api && go run ./cmd/openapi/main.go"
 delay = 1000
 exclude_dir = ["assets", "tmp", "vendor", "testdata", "internal/db/sqlc"]
 exclude_file = []

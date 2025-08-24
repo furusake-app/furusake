@@ -1,19 +1,21 @@
 set dotenv-load
 
+database_url := "postgres://" + env_var("DB_USER") + ":" + env_var("DB_PASSWORD") + "@" + env_var("DB_HOST") + ":" + env_var("DB_PORT") + "/" + env_var("DB_NAME") + "?sslmode=disable"
+
 migrate-up:
-    goose -dir migrations postgres "${DATABASE_URL}" up
+    go tool goose -dir migrations postgres "{{database_url}}" up
 
 migrate-down:
-    goose -dir migrations postgres "${DATABASE_URL}" down
+    go tool goose -dir migrations postgres "{{database_url}}" down
 
 migrate-status:
-    goose -dir migrations postgres "${DATABASE_URL}" status
+    go tool goose -dir migrations postgres "{{database_url}}" status
 
 migrate-create name type="sql":
-    goose -dir migrations create {{name}} {{type}}
+    go tool goose -dir migrations create {{name}} {{type}}
 
 migrate-reset:
-    goose -dir migrations postgres "${DATABASE_URL}" reset
+    go tool goose -dir migrations postgres "{{database_url}}" reset
 
 migrate-version:
-    goose -dir migrations postgres "${DATABASE_URL}" version
+    go tool goose -dir migrations postgres "{{database_url}}" version
