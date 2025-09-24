@@ -8,7 +8,7 @@ on:
     paths:
       - "web/**"
       - "mobile/**"
-      - "packages/**"
+      - "api/**"
       - "biome.jsonc"
       - "package.json"
       - ".github/workflows/node-check.yaml"
@@ -19,7 +19,7 @@ on:
     paths:
       - "web/**"
       - "mobile/**"
-      - "packages/**"
+      - "api/**"
       - "biome.jsonc"
       - "package.json"
       - ".github/workflows/node-check.yaml"
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        app: [web, mobile]
+        app: [web, mobile, api]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -42,20 +42,6 @@ jobs:
         with:
           node-version: 22
           cache: "pnpm"
-      - name: Setup Go
-        uses: actions/setup-go@v5
-      - name: Setup sqlc
-        uses: sqlc-dev/setup-sqlc@v4
-        with:
-          sqlc-version: "1.29.0"
-      - name: Generate sqlc code
-        working-directory: api
-        run: sqlc generate
-      - name: Generate OpenAPI Spec
-        working-directory: api
-        run: go run cmd/openapi/main.go
-      - name: Generate TypeScript API Client
-        run: pnpm -F furusake-api gen
       - name: Check Lint and Format
         run: pnpm check
         working-directory: ${{ matrix.app }}

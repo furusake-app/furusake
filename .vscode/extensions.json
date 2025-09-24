@@ -1,8 +1,6 @@
 {
   "recommendations": [
-    "golang.go",
     "biomejs.biome",
-    "hashicorp.terraform",
     "expo.vscode-expo-tools",
     "bradlc.vscode-tailwindcss",
     "YoavBls.pretty-ts-errors",

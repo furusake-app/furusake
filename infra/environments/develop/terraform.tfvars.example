@@ -1,8 +1,0 @@
-# Development Environment Configuration
-google_project_id = "your-google-project-id-dev"
-google_region     = "asia-northeast1"
-google_zone       = "asia-northeast1-a"
-
-# Database configuration (passwords are auto-generated)
-db_name     = "furusake_dev"
-db_user     = "furusake_user_dev"

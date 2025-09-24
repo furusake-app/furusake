@@ -12,9 +12,6 @@
   "files.trimTrailingWhitespace": true,
   "files.trimFinalNewlines": true,
   "files.eol": "\n",
-  "files.associations": {
-    "*.tfvars.example": "terraform-vars"
-  },
 
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
@@ -43,35 +40,5 @@
   "javascript.suggest.autoImports": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.suggest.autoImports": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-
-  "[go]": {
-    "editor.insertSpaces": false,
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "golang.go",
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "always"
-    }
-  },
-
-  "go.formatTool": "goimports",
-
-  "go.lintTool": "golangci-lint",
-  "go.lintFlags": ["--config=${workspaceFolder}/api/.golangci.toml", "--fast"],
-
-  "[terraform]": {
-    "editor.defaultFormatter": "hashicorp.terraform"
-  },
-  "[terraform-vars]": {
-    "editor.defaultFormatter": "hashicorp.terraform"
-  },
-  "go.goroot": "/home/mst-mkt/.local/share/mise/installs/go/1.25.0",
-  "debug.javascript.defaultRuntimeExecutable": {
-    "pwa-node": "/home/mst-mkt/.local/share/mise/shims/node"
-  },
-  "python.defaultInterpreterPath": "/home/mst-mkt/.local/share/mise/installs/python/3.13.6/bin/python",
-  "go.alternateTools": {
-    "go": "/home/mst-mkt/.local/share/mise/shims/go",
-    "gopls": "/home/mst-mkt/.local/share/mise/shims/gopls"
-  }
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }
