@@ -1,0 +1,17 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "api",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-09-24",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "furusake",
+      "database_id": "f30ca573-47c2-4273-b2e8-36011662e295"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

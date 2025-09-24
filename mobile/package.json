@@ -31,7 +31,6 @@
     "expo-symbols": "~0.4.5",
     "expo-system-ui": "~5.0.11",
     "expo-web-browser": "~14.2.0",
-    "furusake-api": "workspace:*",
     "nativewind": "^4.1.23",
     "react": "19.1.1",
     "react-dom": "19.1.1",
