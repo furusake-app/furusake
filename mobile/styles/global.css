@@ -1,5 +1,8 @@
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind rule */
 @tailwind base;
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind rule */
 @tailwind components;
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind rule */
 @tailwind utilities;
 
 :root {
