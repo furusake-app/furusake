@@ -1,11 +1,4 @@
 [tools]
-air = "latest"
-gcloud = "latest"
-go = "latest"
-golangci-lint = "latest"
-just = "latest"
 node = "lts"
 "npm:@hono/cli" = "latest"
 pnpm = "latest"
-terraform = "latest"
-tflint = "latest"
