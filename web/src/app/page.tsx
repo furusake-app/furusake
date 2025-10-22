@@ -1,16 +1,12 @@
-import * as api from "furusake-api";
+import { parseResponse } from "hono/client";
+import { apiClient } from "@/lib/api-client";
 
 const Home = async () => {
-  const res = await api.healthCheck();
-
-  if (res.status !== 200) {
-    return <div>Failed to fetch health check data</div>;
-  }
+  const res = await parseResponse(apiClient.$get());
 
   return (
     <div>
-      <div>API Health Check: {res.data.status}</div>
-      <div>Database Health Check: {res.data.database}</div>
+      <div>{JSON.stringify(res)}</div>
     </div>
   );
 };
