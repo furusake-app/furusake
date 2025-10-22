@@ -5,7 +5,8 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "wrangler dev",
-    "dply": "wrangler deploy --minify",
+    "dply": "wrangler deploy --minify dist/index.js",
+    "predply": "hono optimize src/index.ts -m",
     "gen:cf-type": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
