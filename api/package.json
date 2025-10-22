@@ -7,12 +7,16 @@
     "dev": "wrangler dev",
     "dply": "wrangler deploy --minify dist/index.js",
     "predply": "hono optimize src/index.ts -m",
+    "check": "biome check .",
+    "fix": "biome check --write .",
+    "typecheck": "tsc --noEmit",
     "gen:cf-type": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
     "hono": "^4.9.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.6",
     "wrangler": "^4.4.0"
   }
 }
