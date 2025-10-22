@@ -1,6 +1,7 @@
-import { honoFactory } from './factory'
+import type { Hono } from 'hono'
+import { type CloudflareEnv, honoFactory } from './factory'
 
-const app = honoFactory.createApp()
+const app: Hono<CloudflareEnv> = honoFactory.createApp()
 
 export const routes = app.basePath('/api').get('/', (c) => c.json({ message: 'Hello, Hono!' }))
 
