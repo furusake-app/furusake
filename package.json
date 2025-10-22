@@ -6,6 +6,12 @@
     "@biomejs/biome": "^2.2.0"
   },
   "scripts": {
+    "dev": "pnpm run \"/^dev:filter-(web|mobile|api)/\"",
+    "dev:web": "pnpm run \"/^dev:filter-(web|api)/\"",
+    "dev:mobile": "pnpm run \"/^dev:filter-(mobile|api)/\"",
+    "dev:filter-web": "pnpm -F web dev",
+    "dev:filter-mobile": "pnpm -F mobile start",
+    "dev:filter-api": "pnpm -F api dev",
     "check": "pnpm -F mobile check && pnpm -F web check",
     "fix": "pnpm -F mobile fix && pnpm -F web fix",
     "typecheck": "pnpm -F mobile typecheck && pnpm -F web typecheck"
