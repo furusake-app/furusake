@@ -12,9 +12,11 @@ export const honoFactory = createFactory<CloudflareEnv>({
   initApp: (app) => {
     app.basePath('/api')
 
-    app.use(cors({
-      origin: (_, c) => c.env.FRONTEND_ORIGIN ?? '',
-    }))
+    app.use(
+      cors({
+        origin: (_, c) => c.env.FRONTEND_ORIGIN ?? '',
+      }),
+    )
     app.use(trimTrailingSlash())
     app.use(logger())
     app.use(poweredBy())
