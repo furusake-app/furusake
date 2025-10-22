@@ -139,6 +139,12 @@ importers:
 
   web:
     dependencies:
+      api:
+        specifier: workspace:^0.0.0
+        version: link:../api
+      hono:
+        specifier: ^4.9.8
+        version: 4.9.8
       next:
         specifier: 15.4.6
         version: 15.4.6(react-dom@19.1.1(react@19.1.1))(react@19.1.1)

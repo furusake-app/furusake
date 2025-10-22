@@ -2,10 +2,11 @@
   "name": "api",
   "version": "0.0.0",
   "private": true,
+  "main": "./src/index.ts",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+    "dply": "wrangler deploy --minify",
+    "gen:cf-type": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
     "hono": "^4.9.8"

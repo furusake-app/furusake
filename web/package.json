@@ -11,9 +11,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "hono": "^4.9.8",
     "next": "15.4.6",
     "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "api": "workspace:^0.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
