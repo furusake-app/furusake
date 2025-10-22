@@ -25,14 +25,42 @@ on:
       - ".github/workflows/node-check.yaml"
 
 jobs:
+  setup-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+      - name: Build api types
+        run: pnpm build:type
+        working-directory: ./api
+      - name: Upload api types artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-types
+          path: ./api/types
   check:
     runs-on: ubuntu-latest
+    needs: [setup-api]
     strategy:
       matrix:
         app: [web, mobile, api]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+      - name: Download api types artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: api-types
+          path: ./api/types
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
